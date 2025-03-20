@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 900px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            flex-direction: column;
+            gap: 20px;
+        }
+        #main{
+            height: 400px;
+            width: 400px;
+            background-color: beige;
+            border-radius: 15px;
+            box-sizing: border-box;
+        }
+        #head{
+            height: 100px;
+            width: 100%;
+            background-image: url("https://www.shutterstock.com/image-vector/internet-digital-security-technology-concept-260nw-1932256898.jpg");
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: aqua;
+            font-size: 30px;
+            box-sizing: border-box;
+            padding-top: 30px;
+            padding-left: 30px;
+            border-radius: 15px;
+        }
+        #outer{
+            height: 300px;
+            width: 100%;
+            background-color: antiquewhite;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #formdiv{
+            height: 200px;
+            width: 60%;
+            border-radius: 15px;position: relative;
+        }
+        input{
+            width: 100%;
+            height: 30px;
+            padding: 0;
+            border: 0;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            padding-left: 20px;
+        }
+        #submit,#reset{
+            width: 40%;
+            background-color: rgba(255,0,0,.5);
+            padding: 0;
+        }
+        #reset{
+            position: absolute;
+            right: 0;
+        }
+        #submit:hover,#reset:hover{
+            background-color: red;
+        }
+        #submit:active,#reset:active{
+            scale: 1.01;
+        }
+        #table{
+            height: 200px;
+            width: 300px;
+            display: none;
+        }
+        table{
+            width: 100%;
+            border: 1px solid rgba(0,0,0,0.5);
+        }
+        tr,td,th{
+            border: 1px solid rgba(0,0,0,0.5);
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="head">
+            </h1>Sign-Up</h1>
+        </div>
+        <div id="outer">
+        <div id="formdiv">
+            <form id="signupForm">
+                <input id="name" placeholder="Name" name="name" type="text">
+                <input id="email" placeholder="Email" name="email" type="email">
+                <input id="password" placeholder="Password" name="password" type="password">
+                <input id="correction" placeholder="Confirm Password" name="confirmPassword" type="password">
+                <input type="submit" id="submit">
+                <input type="reset" id="reset" onclick="myMagic()">
+            </form>
+        </div>
+        </div>
+    </div>
+    <div id="table">
+        <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+        </tr>
+        <tr>
+            <td id="td-name"></td>
+            <td id="td-mail"></td>
+            <td id="td-password"></td>
+        </tr>
+        </table>
+    </div>
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event){
+            event.preventDefault();
+            const n = document.getElementById('name').value;
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('password').value;
+            const cp = document.getElementById('correction').value;
+
+            let name = document.getElementById('td-name');
+            let email = document.getElementById('td-mail');
+            let pass = document.getElementById('td-password');
+
+            const namePattern = /^[a-zA-Z\s-]+$/;//re for name validations....
+            const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            const passwordPattern = /^(?=.*[A-Z].*[A-Z])(?=.*[!#&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{6,}$/;// 2 uppercase, 1 special char, 2 digit, 3 lower case....
+
+
+            if(n.length<=3){
+                alert("Name must be greater than 3 character!");
+                myMagic();
+            }else if(!namePattern.test(n)){
+                alert("Invalid Name");
+                myMagic();
+            }else if(!emailPattern.test(e)){
+                alert("Invalid Email!");
+                myMagic();
+            }else if(p.length<2){//We can avoid this condition as pattern already contain min 6 char 
+                alert("To sort Password");
+                myMagic();
+            }else if(!passwordPattern.test(p)){
+                alert("Password must have 2 upperCase, 1 special(*&#), 2 digit ,3 lower");
+                myMagic();
+            }
+            else if(p!==cp){
+                alert("Password not Matched");
+                myMagic();
+            }else{
+                table.style.display= "block";
+
+                name.innerText = n;
+                email.innerText = e;
+                pass.innerText = p;
+            }
+        });
+
+        function myMagic(){
+            table.style.display = "none";
+        }
+    </script>
+</body>
+</html>
